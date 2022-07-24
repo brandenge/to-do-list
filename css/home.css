@@ -1,0 +1,48 @@
+body {
+  font-family: Verdana, sans-serif;
+}
+
+header {
+  background-color: rgb(75, 75, 75);
+  color: white;
+  padding: 20px 10px 10px 10px;
+}
+
+h1 {
+  font-size: 50px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 10px;
+}
+
+nav a:hover {
+  color: lightgray;
+}
+
+main form {
+  display: block;
+  text-align: center;
+}
+
+h2 {
+  font-size: 30px;
+  text-align: center;
+  margin: 20px;
+}
+
+table {
+  margin: 20px auto;
+}
+
+th {
+  font-weight: bold;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 5px;
+}

@@ -9,8 +9,10 @@
 	<meta name="keywords" content="to-do, to-do-list, checklist">
 	<meta name="description" content="To-do-list application">
 	<meta name="author" content="Branden Ge">
-	<title>To-Do-List</title>
-  <script src="home.js" defer></script>
+	<title>To-Do Lists</title>
+  <script src="js/home.js" defer></script>
+  <script src="https://kit.fontawesome.com/6f69a3f894.js" crossorigin="anonymous"></script>
+  <link type="image/x-icon" sizes="16x16" rel="icon" href="favicon.ico">
 	<link type="text/css" rel="stylesheet" href="css/reset.css">
 	<link type="text/css" rel="stylesheet" href="css/home.css">
   <link type="image/png" sizes="16x16" rel="icon" href="images/checkmark.png">
@@ -18,25 +20,27 @@
 
 <body>
 	<header>
-    <h1>To-Do-List</h1>
+    <h1>To-Do Lists</h1>
 		<nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="login.html">Login</a>
+      <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="list.html"><i class="fa-solid fa-list"></i> Edit List</a>
+      <a href="about.html"><i class="fa-solid fa-circle-question"></i> About</a>
 		</nav>
 	</header>
 
 	<main>
-    <p>Home Page</p>
-	</main>
+    <h2>Create a new to-do list</h2>
+    <form>
+      <label for="new-list-name">New list name:</label>
+      <input type="text" id="new-list-name" size="80">
+      <input type="button" value="Add List" id="add-list-btn">
 
-	<footer>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="login.html">Login</a>
-		</nav>
-	</footer>
+      <h2>View previous to-do lists</h2>
+      <table id="lists-table">
+      </table>
+
+    </form>
+	</main>
 </body>
 
 </html>
