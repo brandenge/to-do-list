@@ -23,7 +23,6 @@ const renderLists = () => {
     nameCol.innerHTML = `${lists[i].name}`;
     listRow.appendChild(nameCol);
 
-    const doneCol = document.createElement('td');
     const checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
     checkbox.setAttribute('value', 'isDone');
@@ -32,11 +31,21 @@ const renderLists = () => {
       nameCol.style.textDecorationLine = 'line-through';
     }
     checkbox.addEventListener('click', listIsDone);
+    const doneCol = document.createElement('td');
     doneCol.appendChild(checkbox);
     listRow.appendChild(doneCol);
 
+    const upBtn = document.createElement('input');
+    upBtn.setAttribute('type', 'button');
+    upBtn.setAttribute('value', 'Up');
+    upBtn.addEventListener('click', move);
+    const downBtn = document.createElement('input');
+    downBtn.setAttribute('type', 'button');
+    downBtn.setAttribute('value', 'Down');
+    downBtn.addEventListener('click', move);
     const moveCol = document.createElement('td');
-
+    moveCol.appendChild(upBtn);
+    moveCol.appendChild(downBtn);
     listRow.appendChild(moveCol);
 
     listsTable.appendChild(listRow);
@@ -70,13 +79,32 @@ const listIsDone = e => {
 };
 
 const deleteList = e => {
+  const lists = getLists();
   let deleteNum = document.getElementById('delete-list-num');
   const deleteIndex = +deleteNum.value - 1;
-  const lists = getLists();
+  if (deleteIndex <= 0 || deleteIndex >= lists.length) {
+    return;
+  }
   lists.splice(deleteIndex, 1);
   setLists(lists);
   renderLists();
   deleteNum.value = '';
+};
+
+const move = e => {
+  let lists = getLists();
+  const currentIndex = +e.target.parentNode.parentNode.id - 1;
+  let newIndex;
+  if (e.target.value === 'Up') {
+    newIndex = currentIndex - 1 >= 0 ? currentIndex - 1 : 0;
+  } else if (e.target.value === 'Down') {
+    newIndex = currentIndex + 1 < lists.length ? currentIndex + 1 : lists.length - 1;
+  }
+  const temp = lists[newIndex];
+  lists[newIndex] = lists[currentIndex];
+  lists[currentIndex] = temp;
+  setLists(lists);
+  renderLists();
 };
 
 getLists();
