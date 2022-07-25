@@ -22,6 +22,7 @@ const renderLists = () => {
     const nameCol = document.createElement('td');
     nameCol.innerHTML = `${lists[i].name}`;
     nameCol.addEventListener('click', setCurrentListName);
+    nameCol.addEventListener('click', animateListName);
     nameCol.setAttribute('class', 'list-name');
     taskRow.appendChild(nameCol);
     listsTable.appendChild(taskRow);
@@ -38,6 +39,13 @@ const setCurrentListName = e => {
   const currentListName = document.getElementById('current-list-name');
   currentListName.innerHTML = e.target.innerHTML;
   renderTasks();
+};
+
+const animateListName = () => {
+  const currentListName = document.getElementById('current-list-name');
+  currentListName.animate({
+    backgroundColor: ['#78CE8F', '#CECB78', '#CEA678', '#CE7878', '#CEA678', '#CECB78', '#78CE8F'],
+  }, 1000);
 };
 
 const renderTasks = () => {
