@@ -38,6 +38,7 @@ const getCurrentListIndex = () => {
 const setCurrentListName = e => {
   const currentListName = document.getElementById('current-list-name');
   currentListName.innerHTML = e.target.innerHTML;
+  localStorage.setItem('current_list_name', `${currentListName.innerHTML}`);
   renderTasks();
 };
 
@@ -152,10 +153,16 @@ const moveTask = e => {
 };
 
 const currentListName = document.getElementById('current-list-name');
-currentListName.innerHTML = getLists()[0].name;
-renderLists();
-renderTasks();
+const currentListNameSaved = localStorage.getItem('current_list_name');
+if (currentListNameSaved === null) {
+  currentListName.innerHTML = getLists()[0].name;
+  localStorage.setItem('current_list_name', `${currentListName.innerHTML}`);
+} else {
+  currentListName.innerHTML = currentListNameSaved;
+}
 const addBtn = document.getElementById('add-task-btn');
 addBtn.addEventListener('click', addTask);
 const deleteBtn = document.getElementById('delete-task-btn');
 deleteBtn.addEventListener('click', deleteTask);
+renderLists();
+renderTasks();
