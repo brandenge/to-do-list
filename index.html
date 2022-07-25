@@ -10,40 +10,39 @@
 	<meta name="description" content="To-do-list application">
 	<meta name="author" content="Branden Ge">
 	<title>To-Do Lists</title>
-  <script src="js/home.js" defer></script>
+  <script src="js/lists.js" defer></script>
   <script src="https://kit.fontawesome.com/6f69a3f894.js" crossorigin="anonymous"></script>
-  <link type="image/x-icon" sizes="16x16" rel="icon" href="favicon.ico">
 	<link type="text/css" rel="stylesheet" href="css/reset.css">
 	<link type="text/css" rel="stylesheet" href="css/styles.css">
-  <link type="image/png" sizes="16x16" rel="icon" href="images/checkmark.png">
+  <link type="image/x-icon" rel="shortcut icon" href="favicon.ico">
 </head>
 
 <body>
 	<header>
     <h1>To-Do Lists</h1>
 		<nav>
-      <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="index.html"><i class="fa-solid fa-house"></i> Lists</a>
       <a href="tasks.html"><i class="fa-solid fa-list"></i> Tasks</a>
       <a href="about.html"><i class="fa-solid fa-circle-question"></i> About</a>
 		</nav>
 	</header>
 
 	<main>
-    <h2>Create a new to-do list</h2>
+    <h2>Edit Lists</h2>
     <form>
       <label for="new-list-name">New list name:</label>
       <input type="text" id="new-list-name" size="50">
       <input type="button" value="Add List" id="add-list-btn">
-
+      <br>
       <label for="delete-list">List number to delete:</label>
       <input type="text" id="delete-list-num" size="5">
       <input type="button" value="Delete List" id="delete-list-btn">
     </form>
-      <h2>View to-do lists</h2>
-      <table id="lists-table">
-      </table>
+    <hr>
+    <h2>View Lists</h2>
+    <table id="lists-table">
+    </table>
 
-    </form>
 	</main>
 </body>
 

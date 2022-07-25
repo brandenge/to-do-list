@@ -1,16 +1,16 @@
 const getLists = () => {
-  let lists = localStorage.getItem('to_do_lists');
+  const lists = localStorage.getItem('to_do_lists');
   return lists === null ? [] : JSON.parse(lists);
 };
 
-const setLists = (lists) => {
+const setLists = lists => {
   localStorage.setItem('to_do_lists', JSON.stringify(lists));
 };
 
 const renderLists = () => {
   const lists = getLists();
   const listsTable = document.getElementById('lists-table');
-  listsTable.innerHTML = '<th>#</th><th>List Name</th><th>Done</th><th>Up/Down</th>';
+  listsTable.innerHTML = '<th>#</th><th>List Name</th><th>Done</th><th>Move List</th>';
   for (let i = 0, len = lists.length; i < len; i++) {
     const listRow = document.createElement('tr');
     listRow.setAttribute('id', `${i + 1}`);
@@ -25,7 +25,6 @@ const renderLists = () => {
 
     const checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
-    checkbox.setAttribute('value', 'isDone');
     if (lists[i].done) {
       checkbox.checked = true;
       nameCol.style.textDecorationLine = 'line-through';
@@ -38,11 +37,11 @@ const renderLists = () => {
     const upBtn = document.createElement('input');
     upBtn.setAttribute('type', 'button');
     upBtn.setAttribute('value', 'Up');
-    upBtn.addEventListener('click', move);
+    upBtn.addEventListener('click', moveList);
     const downBtn = document.createElement('input');
     downBtn.setAttribute('type', 'button');
     downBtn.setAttribute('value', 'Down');
-    downBtn.addEventListener('click', move);
+    downBtn.addEventListener('click', moveList);
     const moveCol = document.createElement('td');
     moveCol.appendChild(upBtn);
     moveCol.appendChild(downBtn);
@@ -58,8 +57,8 @@ const addList = () => {
   const lists = getLists();
   lists.push({
     name: newListName.value,
-    tasks: [],
-    done: false
+    done: false,
+    tasks: []
   });
   setLists(lists);
   renderLists();
@@ -68,7 +67,7 @@ const addList = () => {
 
 const listIsDone = e => {
   const lists = getLists();
-  let i = +e.target.parentNode.parentNode.id - 1;
+  const i = +e.target.parentNode.parentNode.id - 1;
   lists[i].done = e.target.checked ? true : false;
   if (lists[i].done) {
     e.target.parentNode.parentNode.children[1].style.textDecorationLine = 'line-through';
@@ -82,7 +81,7 @@ const deleteList = e => {
   const lists = getLists();
   let deleteNum = document.getElementById('delete-list-num');
   const deleteIndex = +deleteNum.value - 1;
-  if (deleteIndex <= 0 || deleteIndex >= lists.length) {
+  if (deleteIndex < 0 || deleteIndex >= lists.length) {
     return;
   }
   lists.splice(deleteIndex, 1);
@@ -91,8 +90,8 @@ const deleteList = e => {
   deleteNum.value = '';
 };
 
-const move = e => {
-  let lists = getLists();
+const moveList = e => {
+  const lists = getLists();
   const currentIndex = +e.target.parentNode.parentNode.id - 1;
   let newIndex;
   if (e.target.value === 'Up') {
@@ -107,9 +106,8 @@ const move = e => {
   renderLists();
 };
 
-getLists();
 renderLists();
-const addListBtn = document.getElementById('add-list-btn');
-addListBtn.addEventListener('click', addList);
+const addBtn = document.getElementById('add-list-btn');
+addBtn.addEventListener('click', addList);
 const deleteBtn = document.getElementById('delete-list-btn');
 deleteBtn.addEventListener('click', deleteList);

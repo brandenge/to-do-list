@@ -1,0 +1,38 @@
+aside {
+  width: 25%;
+  float: left;
+}
+
+main {
+  width: 75%;
+}
+
+p {
+  padding-top: 3px;
+  text-align: center;
+}
+
+h3 {
+  font-size: 20px;
+  text-align: center;
+}
+
+#current-list-name {
+  font-weight: bold;
+  padding: 5px;
+  background-color: rgb(120, 206, 143);
+}
+
+aside {
+  height: 1000px;
+}
+
+#lists-table .list-name {
+  text-decoration-line: underline;
+  color: blue;
+  cursor: pointer;
+}
+
+#lists-table .list-name:hover {
+  background-color: rgb(196, 196, 196);
+}

@@ -9,25 +9,48 @@
 	<meta name="keywords" content="to-do, to-do-list, checklist">
 	<meta name="description" content="To-do-list application">
 	<meta name="author" content="Branden Ge">
-	<title>To-Do-List</title>
-  <script src="js/list.js" defer></script>
+	<title>To-Do-Lists</title>
+  <script src="js/tasks.js" defer></script>
+  <script src="https://kit.fontawesome.com/6f69a3f894.js" crossorigin="anonymous"></script>
 	<link type="text/css" rel="stylesheet" href="css/reset.css">
 	<link type="text/css" rel="stylesheet" href="css/styles.css">
-  <link type="image/png" sizes="16x16" rel="icon" href="images/checkmark.png">
+  <link type="text/css" rel="stylesheet" href="css/tasks.css">
+  <link type="image/x-icon" rel="shortcut icon" href="favicon.ico">
 </head>
 
 <body>
 	<header>
-    <h1>To-Do-List</h1>
+    <h1>To-Do-Lists</h1>
 		<nav>
-      <a href="index.html"> Home</a>
-      <a href="tasks.html"> Tasks</a>
-      <a href="about.html"> About</a>
+      <a href="index.html"><i class="fa-solid fa-house"></i> Lists</a>
+      <a href="tasks.html"><i class="fa-solid fa-list"></i> Tasks</a>
+      <a href="about.html"><i class="fa-solid fa-circle-question"></i> About</a>
 		</nav>
 	</header>
 
+  <aside>
+    <h2>Lists</h2>
+    <p>Click a list name to view its tasks</p>
+    <table id="lists-table">
+    </table>
+  </aside>
+
 	<main>
-    <p>Lists</p>
+    <h2>Edit tasks</h2>
+    <form>
+      <label for="new-list-name">New task name:</label>
+      <input type="text" id="new-task-name" size="50">
+      <input type="button" value="Add Task" id="add-task-btn">
+      <br>
+      <label for="delete-list">Task number to delete:</label>
+      <input type="text" id="delete-task-num" size="5">
+      <input type="button" value="Delete Task" id="delete-task-btn">
+    </form>
+    <hr>
+    <h2>View Tasks</h2>
+    <h3>Tasks From List: <span id="current-list-name"></span></h3>
+    <table id="tasks-table">
+    </table>
 	</main>
 
 </body>
