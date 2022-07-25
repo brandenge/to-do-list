@@ -10,24 +10,35 @@ const setLists = (lists) => {
 const renderLists = () => {
   const lists = getLists();
   const listsTable = document.getElementById('lists-table');
-  listsTable.innerHTML = '<th>#</th><th>List Name</th><th>Done</th><th>Delete</th><th>Up/Down</th>';
+  listsTable.innerHTML = '<th>#</th><th>List Name</th><th>Done</th><th>Up/Down</th>';
   for (let i = 0, len = lists.length; i < len; i++) {
-    const list = document.createElement('tr');
-    list.innerHTML = `<td>${i + 1}</td><td>${lists[i].name}</td>`;
+    const listRow = document.createElement('tr');
+    listRow.setAttribute('id', `${i + 1}`);
+
+    const numCol = document.createElement('td');
+    numCol.innerHTML = `${i + 1}`;
+    listRow.appendChild(numCol);
+
+    const nameCol = document.createElement('td');
+    nameCol.innerHTML = `${lists[i].name}`;
+    listRow.appendChild(nameCol);
+
     const doneCol = document.createElement('td');
     const checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
     checkbox.setAttribute('value', 'isDone');
-    checkbox.setAttribute('id', `${i + 1}`)
-    if (lists[i].done) checkbox.setAttribute('checked');
+    if (lists[i].done) {
+      checkbox.checked = true;
+      nameCol.style.textDecorationLine = 'line-through';
+    }
     checkbox.addEventListener('click', listIsDone);
     doneCol.appendChild(checkbox);
-    list.appendChild(doneCol);
-    const deleteCol = document.createElement('td');
-    list.appendChild(deleteCol);
+    listRow.appendChild(doneCol);
+
     const moveCol = document.createElement('td');
-    list.appendChild(moveCol);
-    listsTable.appendChild(list);
+    listRow.appendChild(moveCol);
+
+    listsTable.appendChild(listRow);
   }
 };
 
@@ -47,12 +58,22 @@ const addList = () => {
 
 const listIsDone = e => {
   const lists = getLists();
-  let i = +e.target.id - 1;
-  lists[i].done = e.target.value === 'isDone' ? true : false;
-  if (lists[i].done) e.target.style.textDecoration = 'line-through';
+  let i = +e.target.parentNode.parentNode.id - 1;
+  lists[i].done = e.target.checked ? true : false;
+  if (lists[i].done) {
+    e.target.parentNode.parentNode.children[1].style.textDecorationLine = 'line-through';
+  } else {
+    e.target.parentNode.parentNode.children[1].style.textDecorationLine = 'none';
+  }
+  setLists(lists);
+};
+
+const deleteList = e => {
+  
 };
 
 getLists();
 renderLists();
 const addListBtn = document.getElementById('add-list-btn');
 addListBtn.addEventListener('click', addList);
+const deleteBtn = document.getElementById('');

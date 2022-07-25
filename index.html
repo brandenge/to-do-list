@@ -23,7 +23,7 @@
     <h1>To-Do Lists</h1>
 		<nav>
       <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="list.html"><i class="fa-solid fa-list"></i> Edit List</a>
+      <a href="list.html"><i class="fa-solid fa-list"></i> Tasks</a>
       <a href="about.html"><i class="fa-solid fa-circle-question"></i> About</a>
 		</nav>
 	</header>
@@ -32,10 +32,14 @@
     <h2>Create a new to-do list</h2>
     <form>
       <label for="new-list-name">New list name:</label>
-      <input type="text" id="new-list-name" size="80">
+      <input type="text" id="new-list-name" size="50">
       <input type="button" value="Add List" id="add-list-btn">
 
-      <h2>View previous to-do lists</h2>
+      <label for="delete-list">List number to delete:</label>
+      <input type="text" id="delete-list" size="5">
+      <input type="button" value="Delete List" id="delete-list-btn">
+    </form>
+      <h2>View to-do lists</h2>
       <table id="lists-table">
       </table>
 
