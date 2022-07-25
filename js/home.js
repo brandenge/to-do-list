@@ -36,6 +36,7 @@ const renderLists = () => {
     listRow.appendChild(doneCol);
 
     const moveCol = document.createElement('td');
+
     listRow.appendChild(moveCol);
 
     listsTable.appendChild(listRow);
@@ -69,11 +70,18 @@ const listIsDone = e => {
 };
 
 const deleteList = e => {
-  
+  let deleteNum = document.getElementById('delete-list-num');
+  const deleteIndex = +deleteNum.value - 1;
+  const lists = getLists();
+  lists.splice(deleteIndex, 1);
+  setLists(lists);
+  renderLists();
+  deleteNum.value = '';
 };
 
 getLists();
 renderLists();
 const addListBtn = document.getElementById('add-list-btn');
 addListBtn.addEventListener('click', addList);
-const deleteBtn = document.getElementById('');
+const deleteBtn = document.getElementById('delete-list-btn');
+deleteBtn.addEventListener('click', deleteList);
