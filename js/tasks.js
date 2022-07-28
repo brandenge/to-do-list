@@ -6,7 +6,7 @@ class List {
     this.numCol.innerHTML = `${index + 1}`;
     this.listRow.appendChild(this.numCol);
     this.nameCol = document.createElement('td');
-    this.nameCol.innerHTML = `${List.lists[index].name}`;
+    this.nameCol.innerHTML = List.lists[index].name;
     this.listRow.appendChild(this.nameCol);
     this.nameCol.addEventListener('click', List.setCurrentList);
     this.nameCol.addEventListener('click', List.animateListName);
