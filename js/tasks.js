@@ -135,10 +135,10 @@ class Task {
   static delete(e) {
     const deleteNum = document.getElementById('delete-task-num');
     const deleteIndex = +deleteNum.value - 1;
-    if (deleteIndex < 0 || deleteIndex >= List.currentTasks.length) {
+    if (deleteIndex < 0 || deleteIndex >= List.currentList.tasks.length) {
       return;
     }
-    List.currentTasks.splice(deleteIndex, 1);
+    List.currentList.tasks.splice(deleteIndex, 1);
     List.setLists();
     Task.renderTasks();
     deleteNum.value = '';
