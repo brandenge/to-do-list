@@ -158,16 +158,16 @@ class Task {
     List.setLists();
     Task.renderTasks();
   }
+
+  static initializeTasksPage() {
+    const addBtn = document.getElementById('add-task-btn');
+    addBtn.addEventListener('click', Task.add);
+    const deleteBtn = document.getElementById('delete-task-btn');
+    deleteBtn.addEventListener('click', Task.delete);
+    List.getCurrentListName();
+    List.renderLists();
+    Task.renderTasks();
+  }
 }
 
-const initializeTasksPage = () => {
-  const addBtn = document.getElementById('add-task-btn');
-  addBtn.addEventListener('click', Task.add);
-  const deleteBtn = document.getElementById('delete-task-btn');
-  deleteBtn.addEventListener('click', Task.delete);
-  List.getCurrentListName();
-  List.renderLists();
-  Task.renderTasks();
-}
-
-initializeTasksPage();
+Task.initializeTasksPage();
