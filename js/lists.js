@@ -1,113 +1,116 @@
-const getLists = () => {
-  const lists = localStorage.getItem('to_do_lists');
-  return lists === null ? [] : JSON.parse(lists);
-};
-
-const setLists = lists => {
-  localStorage.setItem('to_do_lists', JSON.stringify(lists));
-};
-
-const renderLists = () => {
-  const lists = getLists();
-  const listsTable = document.getElementById('lists-table');
-  listsTable.innerHTML = '<th>#</th><th>List Name</th><th>Done</th><th>Move List</th>';
-  for (let i = 0, len = lists.length; i < len; i++) {
-    const listRow = document.createElement('tr');
-    listRow.setAttribute('id', `${i + 1}`);
-
-    const numCol = document.createElement('td');
-    numCol.innerHTML = `${i + 1}`;
-    listRow.appendChild(numCol);
-
-    const nameCol = document.createElement('td');
-    nameCol.innerHTML = `${lists[i].name}`;
-    listRow.appendChild(nameCol);
-
-    const checkbox = document.createElement('input');
-    checkbox.setAttribute('type', 'checkbox');
-    if (lists[i].done) {
-      checkbox.checked = true;
-      nameCol.style.textDecorationLine = 'line-through';
+class List {
+  constructor(index) {
+    this.listRow = document.createElement('tr');
+    this.listRow.setAttribute('id', `${index + 1}`);
+    this.numCol = document.createElement('td');
+    this.numCol.innerHTML = `${index + 1}`;
+    this.listRow.appendChild(this.numCol);
+    this.nameCol = document.createElement('td');
+    this.nameCol.innerHTML = List.lists[index].name;
+    this.listRow.appendChild(this.nameCol);
+    this.checkbox = document.createElement('input');
+    this.checkbox.setAttribute('type', 'checkbox');
+    if (List.lists[index].done) {
+      this.checkbox.checked = true;
+      this.nameCol.style.textDecorationLine = 'line-through';
     }
-    checkbox.addEventListener('click', listIsDone);
-    const doneCol = document.createElement('td');
-    doneCol.appendChild(checkbox);
-    listRow.appendChild(doneCol);
-
-    const upBtn = document.createElement('input');
-    upBtn.setAttribute('type', 'button');
-    upBtn.setAttribute('value', 'Up');
-    upBtn.addEventListener('click', moveList);
-    const downBtn = document.createElement('input');
-    downBtn.setAttribute('type', 'button');
-    downBtn.setAttribute('value', 'Down');
-    downBtn.addEventListener('click', moveList);
-    const moveCol = document.createElement('td');
-    moveCol.appendChild(upBtn);
-    moveCol.appendChild(downBtn);
-    listRow.appendChild(moveCol);
-
-    listsTable.appendChild(listRow);
+    this.checkbox.addEventListener('click', List.isDone);
+    this.doneCol = document.createElement('td');
+    this.doneCol.appendChild(this.checkbox);
+    this.listRow.appendChild(this.doneCol);
+    this.upBtn = document.createElement('input');
+    this.upBtn.setAttribute('type', 'button');
+    this.upBtn.setAttribute('value', 'Up');
+    this.upBtn.addEventListener('click', List.move);
+    this.downBtn = document.createElement('input');
+    this.downBtn.setAttribute('type', 'button');
+    this.downBtn.setAttribute('value', 'Down');
+    this.downBtn.addEventListener('click', List.move);
+    this.moveCol = document.createElement('td');
+    this.moveCol.appendChild(this.upBtn);
+    this.moveCol.appendChild(this.downBtn);
+    this.listRow.appendChild(this.moveCol);
   }
-};
 
-const addList = () => {
-  const newListName = document.getElementById('new-list-name');
-  if (newListName.value.trim() === '') return;
-  const lists = getLists();
-  lists.push({
-    name: newListName.value,
-    done: false,
-    tasks: []
-  });
-  setLists(lists);
-  renderLists();
-  newListName.value = '';
-};
+  static lists = List.getLists();
 
-const listIsDone = e => {
-  const lists = getLists();
-  const i = +e.target.parentNode.parentNode.id - 1;
-  lists[i].done = e.target.checked ? true : false;
-  if (lists[i].done) {
-    e.target.parentNode.parentNode.children[1].style.textDecorationLine = 'line-through';
-  } else {
-    e.target.parentNode.parentNode.children[1].style.textDecorationLine = 'none';
+
+  static getLists() {
+    const lists = localStorage.getItem('to_do_lists');
+    return lists === null ? [] : JSON.parse(lists);
   }
-  setLists(lists);
-};
 
-const deleteList = e => {
-  const lists = getLists();
-  let deleteNum = document.getElementById('delete-list-num');
-  const deleteIndex = +deleteNum.value - 1;
-  if (deleteIndex < 0 || deleteIndex >= lists.length) {
-    return;
+  static setLists() {
+    localStorage.setItem('to_do_lists', JSON.stringify(List.lists));
   }
-  lists.splice(deleteIndex, 1);
-  setLists(lists);
-  renderLists();
-  deleteNum.value = '';
-};
 
-const moveList = e => {
-  const lists = getLists();
-  const currentIndex = +e.target.parentNode.parentNode.id - 1;
-  let newIndex;
-  if (e.target.value === 'Up') {
-    newIndex = currentIndex - 1 >= 0 ? currentIndex - 1 : 0;
-  } else if (e.target.value === 'Down') {
-    newIndex = currentIndex + 1 < lists.length ? currentIndex + 1 : lists.length - 1;
+  static renderLists() {
+    const listsTable = document.getElementById('lists-table');
+    listsTable.innerHTML = '<th>#</th><th>List Name</th><th>Done</th><th>Move List</th>';
+    for (let i = 0, len = List.lists.length; i < len; i++) {
+      const listRow = new List(i);
+      listsTable.appendChild(listRow.listRow);
+    }
   }
-  const temp = lists[newIndex];
-  lists[newIndex] = lists[currentIndex];
-  lists[currentIndex] = temp;
-  setLists(lists);
-  renderLists();
-};
 
-renderLists();
-const addBtn = document.getElementById('add-list-btn');
-addBtn.addEventListener('click', addList);
-const deleteBtn = document.getElementById('delete-list-btn');
-deleteBtn.addEventListener('click', deleteList);
+  static add() {
+    const newListName = document.getElementById('new-list-name');
+    if (newListName.value.trim() === '') return;
+    List.lists.push({
+      name: newListName.value,
+      done: false,
+      tasks: []
+    });
+    List.setLists();
+    List.renderLists();
+    newListName.value = '';
+  }
+
+  static isDone(e) {
+    const i = +e.target.parentNode.parentNode.id - 1;
+    List.lists[i].done = e.target.checked ? true : false;
+    if (List.lists[i].done) {
+      e.target.parentNode.parentNode.children[1].style.textDecorationLine = 'line-through';
+    } else {
+      e.target.parentNode.parentNode.children[1].style.textDecorationLine = 'none';
+    }
+    List.setLists();
+  }
+
+  static delete(e) {
+    let deleteNum = document.getElementById('delete-list-num');
+    const deleteIndex = +deleteNum.value - 1;
+    if (deleteIndex < 0 || deleteIndex >= List.lists.length) {
+      return;
+    }
+    List.lists.splice(deleteIndex, 1);
+    List.setLists();
+    List.renderLists();
+    deleteNum.value = '';
+  }
+
+  static move(e) {
+    const currentIndex = +e.target.parentNode.parentNode.id - 1;
+    let newIndex;
+    if (e.target.value === 'Up') {
+      newIndex = currentIndex - 1 >= 0 ? currentIndex - 1 : 0;
+    } else if (e.target.value === 'Down') {
+      newIndex = currentIndex + 1 < List.lists.length ? currentIndex + 1 : List.lists.length - 1;
+    }
+    const temp = List.lists[newIndex];
+    List.lists[newIndex] = List.lists[currentIndex];
+    List.lists[currentIndex] = temp;
+    List.setLists();
+    List.renderLists();
+  }
+
+  static initializeListsPage() {
+    const addBtn = document.getElementById('add-list-btn');
+    addBtn.addEventListener('click', List.add);
+    const deleteBtn = document.getElementById('delete-list-btn');
+    deleteBtn.addEventListener('click', List.delete);
+    List.renderLists();
+  }
+}
+
+List.initializeListsPage();
