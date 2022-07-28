@@ -27,11 +27,12 @@ class List {
   }
 
   static getCurrentListName() {
+    const currentList = document.getElementById('current-list-name');
     if (List.lists.length === 0) {
       currentList.innerHTML = 'First create a list on the lists page';
       return;
     }
-    const currentList = document.getElementById('current-list-name');
+
     if (List.currentListName === null) {
       currentList.innerHTML = List.lists[0].name;
       localStorage.setItem('current_list_name', List.lists[0].name);
