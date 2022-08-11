@@ -1,6 +1,6 @@
 # To-Do Lists
 
-[LIVE DEMO](https://brandenge.github.io/to-do-list/){:target="_blank"}
+[LIVE DEMO](https://brandenge.github.io/to-do-list/)
 
 Version 1.0.15
 
